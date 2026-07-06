@@ -4,6 +4,7 @@ import {
   FileSpreadsheet, Link, User, Plus, Trash2, Globe
 } from 'lucide-react';
 import { BandingItem, STAFF_PRESETS, SITUS_PRESETS, EditLog } from '../types';
+import ConfirmModal from './ConfirmModal';
 
 interface GoogleSheetsSyncProps {
   items: BandingItem[];
