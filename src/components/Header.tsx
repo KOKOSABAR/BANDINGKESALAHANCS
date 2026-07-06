@@ -27,7 +27,7 @@ export default function Header({
 
   return (
     <header id="app-header" className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 sticky top-0 z-30 shadow-xs transition-colors duration-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+      <div className="max-w-[98%] mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           {/* Logo & Info */}
           <div className="flex items-center gap-3 justify-between sm:justify-start">

@@ -408,7 +408,7 @@ export default function App() {
       />
 
       {/* Main Content Dashboard Layout */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main className="flex-1 max-w-[98%] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         
         {/* Banner Helper */}
         <div className="bg-gradient-to-r from-rose-500 to-rose-600 dark:from-gray-900/60 dark:to-gray-900/40 dark:bg-none dark:border dark:border-rose-900/30 text-white dark:text-gray-100 rounded-2xl p-6 sm:p-8 shadow-sm dark:shadow-none flex flex-col md:flex-row md:items-center justify-between gap-6">
