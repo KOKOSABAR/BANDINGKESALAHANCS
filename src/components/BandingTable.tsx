@@ -78,7 +78,7 @@ export default function BandingTable({
     }
 
     return (
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-1">
         {links.map((link, idx) => {
           if (!link || link.trim() === '') return null;
           return (
@@ -87,11 +87,11 @@ export default function BandingTable({
               href={link}
               target="_blank"
               referrerPolicy="no-referrer"
-              className="inline-flex items-center gap-1 px-2 py-1 text-[11px] font-bold text-rose-700 bg-white hover:bg-rose-50 border-2 border-rose-200 rounded-lg shadow-sm transition-all whitespace-nowrap cursor-pointer hover:scale-102"
+              className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-bold text-rose-700 bg-white hover:bg-rose-50 border border-rose-200 rounded-lg shadow-sm transition-all whitespace-nowrap cursor-pointer hover:scale-102"
               title={link}
             >
               <span>SS {idx + 1}</span>
-              <ExternalLink className="h-3 w-3 text-rose-500" />
+              <ExternalLink className="h-2.5 w-2.5 text-rose-500" />
             </a>
           );
         })}
@@ -206,7 +206,7 @@ export default function BandingTable({
                 {/* 1. TANGGAL */}
                 <th 
                   onClick={() => handleSort('tanggal')}
-                  className="px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-950 dark:hover:text-white transition-colors"
+                  className="px-2 py-2.5 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-950 dark:hover:text-white transition-colors"
                 >
                   <div className="flex items-center gap-1">
                     <span>TANGGAL</span>
@@ -219,7 +219,7 @@ export default function BandingTable({
                 {/* 2. NAMA SITUS */}
                 <th 
                   onClick={() => handleSort('namaSitus')}
-                  className="px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-950 dark:hover:text-white transition-colors"
+                  className="px-2 py-2.5 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-950 dark:hover:text-white transition-colors"
                 >
                   <div className="flex items-center gap-1">
                     <span>NAMA SITUS</span>
@@ -232,7 +232,7 @@ export default function BandingTable({
                 {/* 3. NAMA STAFF */}
                 <th 
                   onClick={() => handleSort('namaStaff')}
-                  className="px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-950 dark:hover:text-white transition-colors"
+                  className="px-2 py-2.5 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-950 dark:hover:text-white transition-colors"
                 >
                   <div className="flex items-center gap-1">
                     <span>NAMA STAFF</span>
@@ -243,22 +243,22 @@ export default function BandingTable({
                 </th>
                 
                 {/* 4. BUKTI SS DARI AUDITOR */}
-                <th className="px-4 py-3">BUKTI SS DARI AUDITOR</th>
+                <th className="px-2 py-2.5">BUKTI SS DARI AUDITOR</th>
                 
                 {/* 5. BUKTI BANDING */}
-                <th className="px-4 py-3">BUKTI BANDING</th>
+                <th className="px-2 py-2.5">BUKTI BANDING</th>
                 
                 {/* 6. KETERANGAN BANDING */}
-                <th className="px-4 py-3">KETERANGAN BANDING</th>
+                <th className="px-2 py-2.5">KETERANGAN BANDING</th>
                 
                 {/* 7. KETERANGAN (Status Dropdown) */}
-                <th className="px-4 py-3">KETERANGAN</th>
+                <th className="px-2 py-2.5">KETERANGAN</th>
                 
                 {/* 8. KETERANGAN BANDING DI TOLAK */}
-                <th className="px-4 py-3">KETERANGAN DI TOLAK / NOTE</th>
+                <th className="px-2 py-2.5">KETERANGAN DI TOLAK / NOTE</th>
                 
                 {/* ACTIONS */}
-                <th className="px-4 py-3 text-right">AKSI</th>
+                <th className="px-2 py-2.5 text-right">AKSI</th>
               </tr>
             </thead>
             
@@ -291,47 +291,47 @@ export default function BandingTable({
                       className={`transition-colors border-b border-gray-200 dark:border-gray-800 ${rowBgClass} border-l-4 ${borderLeftColor} group`}
                     >
                       {/* 1. TANGGAL */}
-                      <td className="px-4 py-3.5 font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap">
+                      <td className="px-2 py-2 font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap">
                         {item.tanggal}
                       </td>
 
                       {/* 2. NAMA SITUS */}
-                      <td className="px-4 py-3.5 font-extrabold text-rose-900 dark:text-rose-300 whitespace-nowrap">
-                        <span className="bg-white/80 dark:bg-gray-950/80 border border-rose-200/60 dark:border-rose-950/40 px-2.5 py-1 rounded-lg shadow-2xs">
+                      <td className="px-2 py-2 font-extrabold text-rose-900 dark:text-rose-300 whitespace-nowrap">
+                        <span className="bg-white/80 dark:bg-gray-950/80 border border-rose-200/60 dark:border-rose-950/40 px-2 py-0.5 rounded-lg shadow-2xs">
                           {item.namaSitus}
                         </span>
                       </td>
 
                       {/* 3. NAMA STAFF */}
-                      <td className="px-4 py-3.5 font-extrabold text-gray-950 dark:text-white whitespace-nowrap">
+                      <td className="px-2 py-2 font-extrabold text-gray-950 dark:text-white whitespace-nowrap">
                         {item.namaStaff}
                       </td>
 
                       {/* 4. BUKTI SS DARI AUDITOR */}
-                      <td className="px-4 py-3.5">
+                      <td className="px-2 py-2">
                         {renderLinks(item.buktiSSAuditor, 'Bukti Auditor')}
                       </td>
 
                       {/* 5. BUKTI BANDING */}
-                      <td className="px-4 py-3.5">
+                      <td className="px-2 py-2">
                         {renderLinks(item.buktiBanding, 'Bukti Banding')}
                       </td>
 
                       {/* 6. KETERANGAN BANDING */}
-                      <td className="px-4 py-3.5 max-w-[200px]">
+                      <td className="px-2 py-2 max-w-[130px]">
                         <p className="truncate text-gray-900 dark:text-gray-100 font-bold text-xs" title={item.keteranganBanding}>
                           {item.keteranganBanding || <span className="text-gray-400 italic font-medium">Kosong</span>}
                         </p>
                       </td>
 
                       {/* 7. KETERANGAN (Inline Dropdown status selector) */}
-                      <td className="px-4 py-3.5 whitespace-nowrap">
-                        <div className="relative inline-block w-48">
+                      <td className="px-2 py-2 whitespace-nowrap">
+                        <div className="relative inline-block w-[145px]">
                           <select
                             id={`select-status-inline-${item.id}`}
                             value={item.keterangan}
                             onChange={(e) => onStatusChange(item.id, e.target.value as KeteranganStatus)}
-                            className={`appearance-none w-full text-[11px] font-black uppercase tracking-wider pl-3 pr-8 py-2 rounded-xl border-2 shadow-xs outline-none cursor-pointer focus:ring-4 focus:ring-rose-500/10 transition-all ${getStatusSelectClasses(item.keterangan)}`}
+                            className={`appearance-none w-full text-[10px] font-black uppercase tracking-normal pl-2 pr-6 py-1.5 rounded-lg border shadow-xs outline-none cursor-pointer focus:ring-4 focus:ring-rose-500/10 transition-all ${getStatusSelectClasses(item.keterangan)}`}
                           >
                             {STATUS_OPTIONS.map((opt) => (
                               <option key={opt.value} value={opt.value} className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-bold text-xs">
@@ -339,21 +339,21 @@ export default function BandingTable({
                               </option>
                             ))}
                           </select>
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5">
-                            <ChevronDown className="h-4 w-4 text-current opacity-75" />
+                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1.5">
+                            <ChevronDown className="h-3 w-3 text-current opacity-75" />
                           </div>
                         </div>
                       </td>
 
                       {/* 8. KETERANGAN BANDING DI TOLAK */}
-                      <td className="px-4 py-3.5 max-w-[220px]">
+                      <td className="px-2 py-2 max-w-[130px]">
                         <p className="truncate text-xs font-bold" title={item.keteranganBandingDiTolak}>
                           {item.keteranganBandingDiTolak ? (
                             <span className={
                               item.keterangan === 'BANDING DI TOLAK' 
-                                ? 'text-rose-900 dark:text-rose-300 bg-white/80 dark:bg-rose-950/40 px-2 py-0.5 rounded-md border border-rose-200 dark:border-rose-900/40' 
+                                ? 'text-rose-900 dark:text-rose-300 bg-white/80 dark:bg-rose-950/40 px-1.5 py-0.5 rounded-md border border-rose-200 dark:border-rose-900/40' 
                                 : item.keterangan === 'NOTE'
-                                ? 'text-sky-900 dark:text-sky-300 bg-white/80 dark:bg-sky-950/40 px-2 py-0.5 rounded-md border border-sky-200 dark:border-sky-900/40'
+                                ? 'text-sky-900 dark:text-sky-300 bg-white/80 dark:bg-sky-950/40 px-1.5 py-0.5 rounded-md border border-sky-200 dark:border-sky-900/40'
                                 : 'text-gray-800 dark:text-gray-200'
                             }>
                               {item.keteranganBandingDiTolak}
@@ -365,12 +365,12 @@ export default function BandingTable({
                       </td>
 
                       {/* ACTIONS */}
-                      <td className="px-4 py-3.5 text-right whitespace-nowrap">
-                        <div className="flex items-center justify-end gap-1 px-1 py-0.5 rounded-lg bg-white/40 dark:bg-gray-950/40 border border-gray-200/40 dark:border-gray-800/45 shadow-2xs group-hover:bg-white/80 dark:group-hover:bg-gray-900 transition-all">
+                      <td className="px-2 py-2 text-right whitespace-nowrap">
+                        <div className="flex items-center justify-end gap-0.5 px-0.5 py-0.5 rounded-lg bg-white/40 dark:bg-gray-950/40 border border-gray-200/40 dark:border-gray-800/45 shadow-2xs group-hover:bg-white/80 dark:group-hover:bg-gray-900 transition-all">
                           {/* View Detail Button */}
                           <button
                             onClick={() => setViewingItem(item)}
-                            className="p-1.5 text-gray-700 dark:text-gray-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-white dark:hover:bg-gray-800 rounded-md cursor-pointer transition-all hover:scale-105"
+                            className="p-1 text-gray-700 dark:text-gray-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-white dark:hover:bg-gray-800 rounded-md cursor-pointer transition-all hover:scale-105"
                             title="Detail Rinci"
                           >
                             <Eye className="h-3.5 w-3.5" />
@@ -379,7 +379,7 @@ export default function BandingTable({
                           {/* Duplicate Button */}
                           <button
                             onClick={() => onDuplicate(item)}
-                            className="p-1.5 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-white dark:hover:bg-gray-800 rounded-md cursor-pointer transition-all hover:scale-105"
+                            className="p-1 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-white dark:hover:bg-gray-800 rounded-md cursor-pointer transition-all hover:scale-105"
                             title="Duplikat Record"
                           >
                             <Copy className="h-3.5 w-3.5" />
@@ -388,7 +388,7 @@ export default function BandingTable({
                           {/* Edit Button */}
                           <button
                             onClick={() => onEdit(item)}
-                            className="p-1.5 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white dark:hover:bg-gray-800 rounded-md cursor-pointer transition-all hover:scale-105"
+                            className="p-1 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white dark:hover:bg-gray-800 rounded-md cursor-pointer transition-all hover:scale-105"
                             title="Edit"
                           >
                             <Edit3 className="h-3.5 w-3.5" />
@@ -399,7 +399,7 @@ export default function BandingTable({
                             onClick={() => {
                               setItemToDelete(item);
                             }}
-                            className="p-1.5 text-gray-500 dark:text-gray-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-950/40 rounded-md cursor-pointer transition-all hover:scale-105"
+                            className="p-1 text-gray-500 dark:text-gray-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-950/40 rounded-md cursor-pointer transition-all hover:scale-105"
                             title="Hapus"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
