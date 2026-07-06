@@ -43,7 +43,7 @@ export default function Header({
                   <span className="text-[10px] text-gray-400 dark:text-gray-500 font-bold">WDBOS</span>
                 </div>
                 <h1 className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-                  DASHBOARD BANDING KESALAHAN LIVECHAT
+                  DASHBOARD BANDING KESALAHAN CS
                 </h1>
               </div>
             </div>
