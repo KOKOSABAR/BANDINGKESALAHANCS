@@ -326,7 +326,7 @@ export default function BandingTable({
 
                       {/* 7. KETERANGAN (Inline Dropdown status selector) */}
                       <td className="px-4 py-3.5 whitespace-nowrap">
-                        <div className="relative inline-block w-40">
+                        <div className="relative inline-block w-48">
                           <select
                             id={`select-status-inline-${item.id}`}
                             value={item.keterangan}
