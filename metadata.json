@@ -1,0 +1,6 @@
+{
+  "name": "Banding Livechat WDBOS",
+  "description": "Dashboard untuk merekam, menyaring, dan mengelola banding livechat staf dengan auditor WDBOS berdasarkan periode.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
