@@ -15,16 +15,8 @@ var LOGS_SHEET_NAME = "Riwayat Edit";
 // Opsi untuk Dropdown Keterangan (Status)
 var STATUS_OPTIONS = ["DONE", "PENDING", "BANDING DI TOLAK", "NOTE"];
 
-// Daftar Staff default untuk inisialisasi awal
-var DEFAULT_STAFF_PRESETS = [
-  "Andi Saputra",
-  "Siti Rahma",
-  "Budi Santoso",
-  "Hendra Wijaya",
-  "Dewi Lestari",
-  "Rian Hidayat",
-  "Mega Utami"
-];
+// Daftar Staff default untuk inisialisasi awal (dikosongkan)
+var DEFAULT_STAFF_PRESETS = [];
 
 // Daftar Situs default untuk inisialisasi awal
 var DEFAULT_SITUS_PRESETS = [

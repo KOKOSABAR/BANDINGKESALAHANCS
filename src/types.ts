@@ -72,13 +72,5 @@ export const SITUS_PRESETS = [
   'WDBOS',
 ];
 
-export const STAFF_PRESETS = [
-  'Andi Saputra',
-  'Siti Rahma',
-  'Budi Santoso',
-  'Hendra Wijaya',
-  'Dewi Lestari',
-  'Rian Hidayat',
-  'Mega Utami',
-];
+export const STAFF_PRESETS: string[] = [];
 
