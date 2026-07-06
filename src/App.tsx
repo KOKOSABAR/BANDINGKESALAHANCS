@@ -15,7 +15,7 @@ const LOCAL_STORAGE_KEY = 'wdbos_banding_livechat_items';
 const HISTORY_LOGS_KEY = 'wdbos_edit_history_logs';
 const CURRENT_USER_KEY = 'wdbos_current_staff';
 
-const DEFAULT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyouC1SdCqvy3aXx6i0gNdyx60ygEaCueDmItZJN2zXk3FDSgyvCU8Atz6XmlSXblkN/exec';
+const DEFAULT_WEB_APP_URL = import.meta.env.VITE_GOOGLE_SHEETS_WEBAPP_URL || 'https://script.google.com/macros/s/AKfycbyouC1SdCqvy3aXx6i0gNdyx60ygEaCueDmItZJN2zXk3FDSgyvCU8Atz6XmlSXblkN/exec';
 
 // Empty sample data arrays
 const SAMPLE_ITEMS: BandingItem[] = [];

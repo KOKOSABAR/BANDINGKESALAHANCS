@@ -12,7 +12,7 @@ interface GoogleSheetsSyncProps {
 }
 
 const STORAGE_KEY = 'wdbos_google_sheets_webapp_url';
-const DEFAULT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyouC1SdCqvy3aXx6i0gNdyx60ygEaCueDmItZJN2zXk3FDSgyvCU8Atz6XmlSXblkN/exec';
+const DEFAULT_WEB_APP_URL = import.meta.env.VITE_GOOGLE_SHEETS_WEBAPP_URL || 'https://script.google.com/macros/s/AKfycbyouC1SdCqvy3aXx6i0gNdyx60ygEaCueDmItZJN2zXk3FDSgyvCU8Atz6XmlSXblkN/exec';
 
 export default function GoogleSheetsSync({ items, onSyncComplete, createAuditLog }: GoogleSheetsSyncProps) {
   const [webAppUrl, setWebAppUrl] = useState(() => {
