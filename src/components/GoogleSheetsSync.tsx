@@ -3,11 +3,11 @@ import {
   Cloud, Check, X, RefreshCw, ArrowLeftRight, HelpCircle, 
   FileSpreadsheet, Link, User, Plus, Trash2, Globe
 } from 'lucide-react';
-import { BandingItem, STAFF_PRESETS, SITUS_PRESETS } from '../types';
+import { BandingItem, STAFF_PRESETS, SITUS_PRESETS, EditLog } from '../types';
 
 interface GoogleSheetsSyncProps {
   items: BandingItem[];
-  onSyncComplete: (importedItems: BandingItem[], logMessage: string) => void;
+  onSyncComplete: (importedItems: BandingItem[], logMessage: string, importedLogs?: EditLog[]) => void;
   createAuditLog: (actionType: 'CREATE' | 'UPDATE' | 'DELETE' | 'STATUS_CHANGE', itemName: string, details: string) => void;
 }
 
@@ -116,7 +116,7 @@ export default function GoogleSheetsSync({ items, onSyncComplete, createAuditLog
         if (Array.isArray(result.situsList)) {
           localStorage.setItem('wdbos_situs_synced_list', JSON.stringify(result.situsList.filter(Boolean)));
         }
-        onSyncComplete(result.data, `Mengunduh ${result.data.length} data dari Google Sheets.`);
+        onSyncComplete(result.data, `Mengunduh ${result.data.length} data dari Google Sheets.`, result.logs);
         setStatusMsg({ 
           type: 'success', 
           text: `Selesai! Berhasil mengunduh & memperbarui ${result.data.length} data dari Google Sheets ke dashboard.` 

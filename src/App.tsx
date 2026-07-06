@@ -75,6 +75,15 @@ export default function App() {
         if (Array.isArray(result.situsList)) {
           localStorage.setItem('wdbos_situs_synced_list', JSON.stringify(result.situsList.filter(Boolean)));
         }
+
+        // Sync history logs from spreadsheet
+        if (Array.isArray(result.logs)) {
+          const cleanLogs = result.logs.filter((log: EditLog) => log.itemName !== 'Sesi Operator' && !log.id.includes('sample'));
+          const sortedLogs = cleanLogs.sort((a, b) => b.timestamp - a.timestamp);
+          setLogs(sortedLogs);
+          localStorage.setItem(HISTORY_LOGS_KEY, JSON.stringify(sortedLogs));
+        }
+
         console.log(`Successfully pulled ${cleanItems.length} items from Google Sheets on load.`);
       }
     } catch (err) {
@@ -129,6 +138,29 @@ export default function App() {
     pullDataFromGoogleSheets();
   }, []);
 
+  // Send single audit log to Google Sheets Web App
+  const syncLogToGoogleSheets = async (log: EditLog) => {
+    const webAppUrl = localStorage.getItem('wdbos_google_sheets_webapp_url') || DEFAULT_WEB_APP_URL;
+    if (!webAppUrl) return;
+
+    try {
+      await fetch(webAppUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          action: 'add_log',
+          log: log
+        })
+      });
+      console.log(`Synced audit log ID ${log.id} to Google Sheets.`);
+    } catch (err) {
+      console.error('Error syncing audit log to Google Sheets:', err);
+    }
+  };
+
   // Helper function to log audit trails
   const createAuditLog = (actionType: EditLog['actionType'], itemName: string, details: string) => {
     const newLog: EditLog = {
@@ -142,6 +174,9 @@ export default function App() {
     const updatedLogs = [newLog, ...logs];
     setLogs(updatedLogs);
     localStorage.setItem(HISTORY_LOGS_KEY, JSON.stringify(updatedLogs));
+
+    // Sync the log to Google Sheets so other staff members can see it
+    syncLogToGoogleSheets(newLog);
   };
 
   // Sync banding items to state & storage
@@ -377,7 +412,15 @@ export default function App() {
           <div className="flex gap-2 shrink-0 items-center">
             <GoogleSheetsSync 
               items={items}
-              onSyncComplete={(importedItems) => saveItemsToStateAndStorage(importedItems)}
+              onSyncComplete={(importedItems, logMsg, importedLogs) => {
+                saveItemsToStateAndStorage(importedItems);
+                if (importedLogs && Array.isArray(importedLogs)) {
+                  const cleanLogs = importedLogs.filter(log => log.itemName !== 'Sesi Operator' && !log.id.includes('sample'));
+                  const sortedLogs = cleanLogs.sort((a, b) => b.timestamp - a.timestamp);
+                  setLogs(sortedLogs);
+                  localStorage.setItem(HISTORY_LOGS_KEY, JSON.stringify(sortedLogs));
+                }
+              }}
               createAuditLog={createAuditLog}
             />
           </div>

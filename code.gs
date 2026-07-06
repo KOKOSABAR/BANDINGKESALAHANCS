@@ -10,6 +10,7 @@
 var SHEET_NAME = "Data Banding";
 var STAFF_SHEET_NAME = "Daftar Staff";
 var SITUS_SHEET_NAME = "Daftar Situs";
+var LOGS_SHEET_NAME = "Riwayat Edit";
 
 // Opsi untuk Dropdown Keterangan (Status)
 var STATUS_OPTIONS = ["DONE", "PENDING", "BANDING DI TOLAK", "NOTE"];
@@ -137,6 +138,29 @@ function initializeSheet() {
       situsSheet.appendRow([DEFAULT_SITUS_PRESETS[m]]);
     }
   }
+
+  // 4. Inisialisasi Sheet Riwayat Edit
+  var logsSheet = ss.getSheetByName(LOGS_SHEET_NAME);
+  if (!logsSheet) {
+    logsSheet = ss.insertSheet(LOGS_SHEET_NAME);
+    var logHeaders = ["LOG ID", "TIMESTAMP", "OPERATOR", "ACTION TYPE", "ITEM NAME", "DETAILS"];
+    logsSheet.getRange(1, 1, 1, logHeaders.length).setValues([logHeaders]);
+    
+    // Style header logs sheet
+    var logsHeaderRange = logsSheet.getRange(1, 1, 1, logHeaders.length);
+    logsHeaderRange.setFontWeight("bold");
+    logsHeaderRange.setFontColor("#ffffff");
+    logsHeaderRange.setBackgroundColor("#475569"); // Slate 600
+    logsHeaderRange.setHorizontalAlignment("center");
+    
+    logsSheet.setColumnWidth(1, 130); // LOG ID
+    logsSheet.setColumnWidth(2, 160); // TIMESTAMP
+    logsSheet.setColumnWidth(3, 150); // OPERATOR
+    logsSheet.setColumnWidth(4, 130); // ACTION TYPE
+    logsSheet.setColumnWidth(5, 200); // ITEM NAME
+    logsSheet.setColumnWidth(6, 400); // DETAILS
+    logsSheet.getRange("F:F").setWrap(true);
+  }
   
   return sheet;
 }
@@ -229,8 +253,34 @@ function doGet(e) {
       });
     }
     
-    return ContentService.createTextOutput(JSON.stringify({ status: "success", data: list, staffList: staffList, situsList: situsList }))
-                         .setMimeType(ContentService.MimeType.JSON);
+    // Ambil daftar riwayat edit dari sheet "Riwayat Edit"
+    var logsSheet = ss.getSheetByName(LOGS_SHEET_NAME);
+    if (!logsSheet) {
+      initializeSheet();
+      logsSheet = ss.getSheetByName(LOGS_SHEET_NAME);
+    }
+    var logsData = logsSheet.getDataRange().getValues();
+    var logList = [];
+    for (var i = 1; i < logsData.length; i++) {
+      var logRow = logsData[i];
+      if (!logRow[0]) continue;
+      logList.push({
+        id: logRow[0].toString(),
+        timestamp: logRow[1] ? Number(logRow[1]) : Date.now(),
+        operator: logRow[2].toString(),
+        actionType: logRow[3].toString(),
+        itemName: logRow[4].toString(),
+        details: logRow[5].toString()
+      });
+    }
+
+    return ContentService.createTextOutput(JSON.stringify({ 
+      status: "success", 
+      data: list, 
+      staffList: staffList, 
+      situsList: situsList,
+      logs: logList
+    })).setMimeType(ContentService.MimeType.JSON);
                          
   } catch (err) {
     return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
@@ -568,6 +618,63 @@ function doPost(e) {
       }
       
       return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Sinkronisasi seluruh nama situs berhasil" }))
+                           .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    else if (action === "add_log") {
+      var logItem = payload.log;
+      if (!logItem) {
+        return ContentService.createTextOutput(JSON.stringify({ status: "error", message: "Data log kosong" }))
+                             .setMimeType(ContentService.MimeType.JSON);
+      }
+      var logsSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(LOGS_SHEET_NAME);
+      if (!logsSheet) {
+        initializeSheet();
+        logsSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(LOGS_SHEET_NAME);
+      }
+      logsSheet.appendRow([
+        logItem.id,
+        logItem.timestamp.toString(),
+        logItem.operator,
+        logItem.actionType,
+        logItem.itemName,
+        logItem.details
+      ]);
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Log berhasil ditambahkan ke Google Sheets" }))
+                           .setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    else if (action === "sync_logs_all") {
+      var logsArray = payload.logs;
+      if (!Array.isArray(logsArray)) {
+        return ContentService.createTextOutput(JSON.stringify({ status: "error", message: "Format array logs salah" }))
+                             .setMimeType(ContentService.MimeType.JSON);
+      }
+      var logsSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(LOGS_SHEET_NAME);
+      if (!logsSheet) {
+        initializeSheet();
+        logsSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(LOGS_SHEET_NAME);
+      }
+      
+      // Kosongkan seluruh log (kecuali header)
+      var lastRow = logsSheet.getLastRow();
+      if (lastRow > 1) {
+        logsSheet.deleteRows(2, lastRow - 1);
+      }
+      
+      // Tambah kembali satu per satu
+      for (var j = 0; j < logsArray.length; j++) {
+        var lg = logsArray[j];
+        logsSheet.appendRow([
+          lg.id,
+          lg.timestamp.toString(),
+          lg.operator,
+          lg.actionType,
+          lg.itemName,
+          lg.details
+        ]);
+      }
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Sinkronisasi seluruh log berhasil" }))
                            .setMimeType(ContentService.MimeType.JSON);
     }
     
