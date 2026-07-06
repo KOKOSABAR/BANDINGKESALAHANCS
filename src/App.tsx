@@ -136,6 +136,15 @@ export default function App() {
 
     // 5. Pull latest data from Google Sheets to sync dashboard state for other staff
     pullDataFromGoogleSheets();
+
+    // 6. Setup automatic background sync interval (every 10 seconds) to enable real-time updates without refreshing
+    const syncInterval = setInterval(() => {
+      pullDataFromGoogleSheets();
+    }, 10000);
+
+    return () => {
+      clearInterval(syncInterval);
+    };
   }, []);
 
   // Send single audit log to Google Sheets Web App
