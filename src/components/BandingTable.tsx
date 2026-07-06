@@ -555,7 +555,7 @@ export default function BandingTable({
         showPasswordInput={true}
         passwordValue={deletePassword}
         onPasswordChange={setDeletePassword}
-        passwordPlaceholder="Masukkan password wdbos88..."
+        passwordPlaceholder="Masukkan password..."
         isConfirmDisabled={deletePassword !== 'wdbos88'}
         onConfirm={() => {
           if (itemToDelete) {

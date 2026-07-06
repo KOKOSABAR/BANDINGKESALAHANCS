@@ -89,9 +89,6 @@ export default function ConfirmModal({
                 onChange={(e) => onPasswordChange?.(e.target.value)}
                 className="block w-full px-3 py-2 text-xs bg-gray-50 dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-lg focus:bg-white dark:focus:bg-gray-900 outline-none transition-all font-semibold text-gray-800 dark:text-white"
               />
-              <p className="text-[10px] text-gray-400 dark:text-gray-500 font-medium">
-                Masukkan password <span className="font-bold text-rose-600 dark:text-rose-400">wdbos88</span> untuk mengonfirmasi.
-              </p>
             </div>
           )}
 
