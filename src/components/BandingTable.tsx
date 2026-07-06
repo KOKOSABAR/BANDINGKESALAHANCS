@@ -30,6 +30,7 @@ export default function BandingTable({
   // Modal/Drawer for viewing details
   const [viewingItem, setViewingItem] = useState<BandingItem | null>(null);
   const [itemToDelete, setItemToDelete] = useState<BandingItem | null>(null);
+  const [deletePassword, setDeletePassword] = useState('');
 
   // Extract unique site names for filters
   const uniqueSites = Array.from(new Set(items.map(item => item.namaSitus))).filter(Boolean);
@@ -78,7 +79,7 @@ export default function BandingTable({
     }
 
     return (
-      <div className="flex flex-wrap gap-1">
+      <div className="flex flex-wrap justify-center gap-1">
         {links.map((link, idx) => {
           if (!link || link.trim() === '') return null;
           return (
@@ -206,9 +207,9 @@ export default function BandingTable({
                 {/* 1. TANGGAL */}
                 <th 
                   onClick={() => handleSort('tanggal')}
-                  className="px-2 py-2.5 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-950 dark:hover:text-white transition-colors"
+                  className="px-2 py-2.5 text-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-950 dark:hover:text-white transition-colors"
                 >
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center justify-center gap-1">
                     <span>TANGGAL</span>
                     {sortBy === 'tanggal' && (
                       <span className="text-rose-500 text-[10px]">{sortOrder === 'asc' ? '▲' : '▼'}</span>
@@ -219,9 +220,9 @@ export default function BandingTable({
                 {/* 2. NAMA SITUS */}
                 <th 
                   onClick={() => handleSort('namaSitus')}
-                  className="px-2 py-2.5 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-950 dark:hover:text-white transition-colors"
+                  className="px-2 py-2.5 text-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-950 dark:hover:text-white transition-colors"
                 >
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center justify-center gap-1">
                     <span>NAMA SITUS</span>
                     {sortBy === 'namaSitus' && (
                       <span className="text-rose-500 text-[10px]">{sortOrder === 'asc' ? '▲' : '▼'}</span>
@@ -232,9 +233,9 @@ export default function BandingTable({
                 {/* 3. NAMA STAFF */}
                 <th 
                   onClick={() => handleSort('namaStaff')}
-                  className="px-2 py-2.5 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-950 dark:hover:text-white transition-colors"
+                  className="px-2 py-2.5 text-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-950 dark:hover:text-white transition-colors"
                 >
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center justify-center gap-1">
                     <span>NAMA STAFF</span>
                     {sortBy === 'namaStaff' && (
                       <span className="text-rose-500 text-[10px]">{sortOrder === 'asc' ? '▲' : '▼'}</span>
@@ -243,22 +244,22 @@ export default function BandingTable({
                 </th>
                 
                 {/* 4. BUKTI SS DARI AUDITOR */}
-                <th className="px-2 py-2.5">BUKTI SS DARI AUDITOR</th>
+                <th className="px-2 py-2.5 text-center">BUKTI SS DARI AUDITOR</th>
                 
                 {/* 5. BUKTI BANDING */}
-                <th className="px-2 py-2.5">BUKTI BANDING</th>
+                <th className="px-2 py-2.5 text-center">BUKTI BANDING</th>
                 
                 {/* 6. KETERANGAN BANDING */}
-                <th className="px-2 py-2.5">KETERANGAN BANDING</th>
+                <th className="px-2 py-2.5 text-center">KETERANGAN BANDING</th>
                 
                 {/* 7. KETERANGAN (Status Dropdown) */}
-                <th className="px-2 py-2.5">KETERANGAN</th>
+                <th className="px-2 py-2.5 text-center">KETERANGAN</th>
                 
                 {/* 8. KETERANGAN BANDING DI TOLAK */}
-                <th className="px-2 py-2.5">KETERANGAN DI TOLAK / NOTE</th>
+                <th className="px-2 py-2.5 text-center">KETERANGAN DI TOLAK / NOTE</th>
                 
                 {/* ACTIONS */}
-                <th className="px-2 py-2.5 text-right">AKSI</th>
+                <th className="px-2 py-2.5 text-center">AKSI</th>
               </tr>
             </thead>
             
@@ -291,41 +292,41 @@ export default function BandingTable({
                       className={`transition-colors border-b border-gray-200 dark:border-gray-800 ${rowBgClass} border-l-4 ${borderLeftColor} group`}
                     >
                       {/* 1. TANGGAL */}
-                      <td className="px-2 py-2 font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap">
+                      <td className="px-2 py-2 text-center font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap">
                         {item.tanggal}
                       </td>
 
                       {/* 2. NAMA SITUS */}
-                      <td className="px-2 py-2 font-extrabold text-rose-900 dark:text-rose-300 whitespace-nowrap">
+                      <td className="px-2 py-2 text-center font-extrabold text-rose-900 dark:text-rose-300 whitespace-nowrap">
                         <span className="bg-white/80 dark:bg-gray-950/80 border border-rose-200/60 dark:border-rose-950/40 px-2 py-0.5 rounded-lg shadow-2xs">
                           {item.namaSitus}
                         </span>
                       </td>
 
                       {/* 3. NAMA STAFF */}
-                      <td className="px-2 py-2 font-extrabold text-gray-950 dark:text-white whitespace-nowrap">
+                      <td className="px-2 py-2 text-center font-extrabold text-gray-950 dark:text-white whitespace-nowrap">
                         {item.namaStaff}
                       </td>
 
                       {/* 4. BUKTI SS DARI AUDITOR */}
-                      <td className="px-2 py-2">
+                      <td className="px-2 py-2 text-center">
                         {renderLinks(item.buktiSSAuditor, 'Bukti Auditor')}
                       </td>
 
                       {/* 5. BUKTI BANDING */}
-                      <td className="px-2 py-2">
+                      <td className="px-2 py-2 text-center">
                         {renderLinks(item.buktiBanding, 'Bukti Banding')}
                       </td>
 
                       {/* 6. KETERANGAN BANDING */}
-                      <td className="px-2 py-2 max-w-[130px]">
-                        <p className="truncate text-gray-900 dark:text-gray-100 font-bold text-xs" title={item.keteranganBanding}>
+                      <td className="px-2 py-2 max-w-[130px] text-center">
+                        <p className="truncate text-gray-900 dark:text-gray-100 font-bold text-xs text-center" title={item.keteranganBanding}>
                           {item.keteranganBanding || <span className="text-gray-400 italic font-medium">Kosong</span>}
                         </p>
                       </td>
 
                       {/* 7. KETERANGAN (Inline Dropdown status selector) */}
-                      <td className="px-2 py-2 whitespace-nowrap">
+                      <td className="px-2 py-2 text-center whitespace-nowrap">
                         <div className="relative inline-block w-[145px]">
                           <select
                             id={`select-status-inline-${item.id}`}
@@ -346,8 +347,8 @@ export default function BandingTable({
                       </td>
 
                       {/* 8. KETERANGAN BANDING DI TOLAK */}
-                      <td className="px-2 py-2 max-w-[130px]">
-                        <p className="truncate text-xs font-bold" title={item.keteranganBandingDiTolak}>
+                      <td className="px-2 py-2 max-w-[130px] text-center">
+                        <p className="truncate text-xs font-bold text-center" title={item.keteranganBandingDiTolak}>
                           {item.keteranganBandingDiTolak ? (
                             <span className={
                               item.keterangan === 'BANDING DI TOLAK' 
@@ -365,8 +366,8 @@ export default function BandingTable({
                       </td>
 
                       {/* ACTIONS */}
-                      <td className="px-2 py-2 text-right whitespace-nowrap">
-                        <div className="flex items-center justify-end gap-0.5 px-0.5 py-0.5 rounded-lg bg-white/40 dark:bg-gray-950/40 border border-gray-200/40 dark:border-gray-800/45 shadow-2xs group-hover:bg-white/80 dark:group-hover:bg-gray-900 transition-all">
+                      <td className="px-2 py-2 text-center whitespace-nowrap">
+                        <div className="inline-flex items-center justify-center gap-0.5 px-0.5 py-0.5 rounded-lg bg-white/40 dark:bg-gray-950/40 border border-gray-200/40 dark:border-gray-800/45 shadow-2xs group-hover:bg-white/80 dark:group-hover:bg-gray-900 transition-all">
                           {/* View Detail Button */}
                           <button
                             onClick={() => setViewingItem(item)}
@@ -551,13 +552,22 @@ export default function BandingTable({
         confirmLabel="Ya, Hapus"
         cancelLabel="Batal"
         type="danger"
+        showPasswordInput={true}
+        passwordValue={deletePassword}
+        onPasswordChange={setDeletePassword}
+        passwordPlaceholder="Masukkan password wdbos88..."
+        isConfirmDisabled={deletePassword !== 'wdbos88'}
         onConfirm={() => {
           if (itemToDelete) {
             onDelete(itemToDelete.id);
             setItemToDelete(null);
+            setDeletePassword('');
           }
         }}
-        onCancel={() => setItemToDelete(null)}
+        onCancel={() => {
+          setItemToDelete(null);
+          setDeletePassword('');
+        }}
       />
     </div>
   );
