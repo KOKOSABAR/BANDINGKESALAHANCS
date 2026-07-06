@@ -352,9 +352,30 @@ export default function App() {
   };
 
   // Clear all history logs callback
-  const handleClearLogs = () => {
+  const handleClearLogs = async () => {
     setLogs([]);
     localStorage.setItem(HISTORY_LOGS_KEY, JSON.stringify([]));
+
+    // Clear logs in Google Sheets too
+    const webAppUrl = localStorage.getItem('wdbos_google_sheets_webapp_url') || DEFAULT_WEB_APP_URL;
+    if (webAppUrl) {
+      try {
+        await fetch(webAppUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            action: 'sync_logs_all',
+            logs: []
+          })
+        });
+        console.log('Cleared audit logs in Google Sheets.');
+      } catch (err) {
+        console.error('Failed to clear audit logs in Google Sheets:', err);
+      }
+    }
   };
 
   // Filter items by selected period
