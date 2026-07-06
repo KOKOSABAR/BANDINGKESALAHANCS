@@ -50,6 +50,38 @@ export default function App() {
   const [editingItem, setEditingItem] = useState<BandingItem | null>(null);
   const [confirmLogout, setConfirmLogout] = useState(false);
 
+  // Pull latest data from Google Sheets spreadsheet to keep dashboard synced for all staff
+  const pullDataFromGoogleSheets = async () => {
+    const webAppUrl = localStorage.getItem('wdbos_google_sheets_webapp_url') || DEFAULT_WEB_APP_URL;
+    if (!webAppUrl) return;
+
+    try {
+      const response = await fetch(webAppUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        }
+      });
+      const result = await response.json();
+      if (result.status === 'success' && Array.isArray(result.data)) {
+        // Filter out any sample data automatically
+        const cleanItems = result.data.filter((item: BandingItem) => !item.id.includes('sample'));
+        setItems(cleanItems);
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cleanItems));
+
+        if (Array.isArray(result.staffList)) {
+          localStorage.setItem('wdbos_staff_synced_list', JSON.stringify(result.staffList.filter(Boolean)));
+        }
+        if (Array.isArray(result.situsList)) {
+          localStorage.setItem('wdbos_situs_synced_list', JSON.stringify(result.situsList.filter(Boolean)));
+        }
+        console.log(`Successfully pulled ${cleanItems.length} items from Google Sheets on load.`);
+      }
+    } catch (err) {
+      console.error('Failed to pull data from Google Sheets on load, falling back to local storage cache:', err);
+    }
+  };
+
   // Initialize and load items, logs & session
   useEffect(() => {
     // 1. Load active user
@@ -58,22 +90,16 @@ export default function App() {
       setCurrentUser(savedUser);
     }
 
-    // 2. Load Banding data
+    // 2. Load Banding data from local storage first (instant cache)
     const savedItems = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (savedItems) {
       try {
         const parsed = JSON.parse(savedItems) as BandingItem[];
-        // Filter out any sample items automatically
         const nonSampleItems = parsed.filter(item => !item.id.includes('sample'));
         setItems(nonSampleItems);
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(nonSampleItems));
       } catch (err) {
         console.error('Failed to parse items from localstorage', err);
-        setItems([]);
       }
-    } else {
-      setItems([]);
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([]));
     }
 
     // 3. Load logs (excluding operator session logs and sample logs)
@@ -85,14 +111,9 @@ export default function App() {
           log => log.itemName !== 'Sesi Operator' && !log.id.includes('sample')
         );
         setLogs(filteredLogs);
-        localStorage.setItem(HISTORY_LOGS_KEY, JSON.stringify(filteredLogs));
       } catch (err) {
         console.error('Failed to parse logs from localstorage', err);
-        setLogs([]);
       }
-    } else {
-      setLogs([]);
-      localStorage.setItem(HISTORY_LOGS_KEY, JSON.stringify([]));
     }
 
     // 4. Set current period
@@ -103,6 +124,9 @@ export default function App() {
     else if (month >= 3 && month <= 5) setSelectedPeriod(2);
     else if (month >= 6 && month <= 8) setSelectedPeriod(3);
     else setSelectedPeriod(4);
+
+    // 5. Pull latest data from Google Sheets to sync dashboard state for other staff
+    pullDataFromGoogleSheets();
   }, []);
 
   // Helper function to log audit trails
