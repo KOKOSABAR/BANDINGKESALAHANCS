@@ -32,6 +32,8 @@ export default function GoogleSheetsSync({ items, onSyncComplete, createAuditLog
   });
 
   const [isOpen, setIsOpen] = useState(false);
+  const [showPasswordGate, setShowPasswordGate] = useState(false);
+  const [settingsPassword, setSettingsPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -413,7 +415,7 @@ export default function GoogleSheetsSync({ items, onSyncComplete, createAuditLog
     <div id="google-sheets-sync-container" className="inline-block">
       {/* Mini Status Indicator & Trigger Button */}
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={() => setShowPasswordGate(true)}
         className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer border ${
           savedUrl 
             ? 'bg-emerald-50 dark:bg-emerald-950/25 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/30' 
@@ -721,6 +723,30 @@ export default function GoogleSheetsSync({ items, onSyncComplete, createAuditLog
           </div>
         </div>
       )}
+
+      {/* PASSWORD GATE FOR SETTINGS */}
+      <ConfirmModal
+        isOpen={showPasswordGate}
+        title="Masukkan Password Pengaturan"
+        message="Akses ke menu Pengaturan membutuhkan otentikasi kata sandi."
+        confirmLabel="Buka Pengaturan"
+        cancelLabel="Batal"
+        type="info"
+        showPasswordInput={true}
+        passwordValue={settingsPassword}
+        onPasswordChange={setSettingsPassword}
+        passwordPlaceholder="Masukkan password..."
+        isConfirmDisabled={settingsPassword !== 'wdbos88'}
+        onConfirm={() => {
+          setShowPasswordGate(false);
+          setIsOpen(true);
+          setSettingsPassword('');
+        }}
+        onCancel={() => {
+          setShowPasswordGate(false);
+          setSettingsPassword('');
+        }}
+      />
     </div>
   );
 }
